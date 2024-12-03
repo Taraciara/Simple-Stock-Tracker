@@ -1,0 +1,18 @@
+# stock_tracker.py
+
+import requests
+
+def get_stock_price(symbol):
+    api_key = "your_api_key"
+    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}"
+    response = requests.get(url).json()
+    return float(response["Global Quote"]["05. price"])
+
+def stock_alert(symbol, threshold):
+    price = get_stock_price(symbol)
+    if price > threshold:
+        return f"Alert: {symbol} price is above {threshold}: ${price}"
+    return f"{symbol} price is ${price}"
+
+# Sample usage
+print(stock_alert("AAPL", 150))
